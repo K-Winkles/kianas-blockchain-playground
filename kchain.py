@@ -10,12 +10,12 @@ import json
 
 app = Sanic()
 session = Session(app, interface=InMemorySessionInterface())
-
-my_block = None
+my_blockchain = None
 
 @app.route("/")
 async def welcome(request):
     return response.text('Welcome to my blockchain playground.')
+
 
 @app.route("/create_wallet")
 async def create_wallet(request):
@@ -27,10 +27,12 @@ async def create_wallet(request):
     }
     return response.json(message)
 
-@app.route("/create_block")
-async def create_block(request):
-    my_block = Block()
+
+@app.route("/create_blockchain")
+async def create_blockchain(request):
+    my_blockchain = BlockChain()
     return response.html("<h4> New block instantiated: </h4>")
+
 
 @app.route("/add_transaction", methods=['GET','POST'])
 async def create_block(request):
@@ -39,6 +41,7 @@ async def create_block(request):
     elif request.method == 'POST':
         # create the transaction
     return response.html(res)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, workers = 1)
